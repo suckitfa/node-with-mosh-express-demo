@@ -7,6 +7,9 @@ const helmet = require('helmet')
 const morgan = require('morgan')
 const config = require('config')
 
+// how to debugging node.js app
+const startupDebugger = require('debug')('app:startup')
+const debDebugger = require('debug')('app:db')
 // configuration
 console.log('App name = ', config.get('name'))
 console.log('mail server = ',config.get('mail.host'))
@@ -18,6 +21,7 @@ app.use(helmet())
 // detect env to use third party logger-morgan
 if(app.get('env') === 'development') {
   app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
+  startupDebugger('Morgan enabled....')
 }
 app.use(express.json());
 app.use(express.urlencoded()); // key=value&key=value
