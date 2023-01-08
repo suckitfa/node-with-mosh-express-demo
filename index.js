@@ -5,9 +5,15 @@ const logger = require('./logger');
 const auth = require('./auth')
 const helmet = require('helmet')
 const morgan = require('morgan')
+
+console.log('NODE_ENV = ',process.env.NODE_ENV)
+console.log(`env = ${app.get('env')}`)
 // middleware
 app.use(helmet())
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
+// detect env to use third party logger-morgan
+if(app.get('env') === 'development') {
+  app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
+}
 app.use(express.json());
 app.use(express.urlencoded()); // key=value&key=value
 // static file
