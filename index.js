@@ -3,9 +3,15 @@ const Joi = require("joi");
 const app = express();
 const logger = require('./logger');
 const auth = require('./auth')
+const helmet = require('helmet')
+const morgan = require('morgan')
 // middleware
+app.use(helmet())
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 app.use(express.json());
-
+app.use(express.urlencoded()); // key=value&key=value
+// static file
+app.use(express.static('public'))
 // write our own middleware
 app.use(logger)
 app.use(auth)
