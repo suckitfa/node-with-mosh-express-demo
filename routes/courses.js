@@ -20,12 +20,12 @@ const courses = [
 ];
 // routes params
 // get all courses
-router.get("/api/courses", (req, res) => {
+router.get("/", (req, res) => {
   res.send(courses);
 });
 
 // get a course by Id
-router.get("/api/courses/:id", (req, res) => {
+router.get("/:id", (req, res) => {
   const { id } = req.params;
   const course = courses.find((item) => item.id === parseInt(id));
   if (!course) {
@@ -36,7 +36,7 @@ router.get("/api/courses/:id", (req, res) => {
 });
 
 // create a course
-router.post("/api/courses/", (req, res) => {
+router.post("/", (req, res) => {
   // useing joi to validate input
   const schema = Joi.object({
     name: Joi.string().min(3).required(),
@@ -56,20 +56,6 @@ router.post("/api/courses/", (req, res) => {
   };
   courses.push(course);
   res.send(course);
-});
-// url: http://localhost:3000/api/course/1?sort=name
-// router.get('/api/course/:id',(req,res) => {
-//     // routes parameters
-//     console.log('req.params = ',req.params)
-//     // query parameters
-//     console.log('req.query = ',req.query)
-
-//     console.log('id = ',req.params.id)
-//     res.send([1,2,3,4,4])
-// })
-
-router.get("/api/posts/:year/:month", (req, res) => {
-  res.send(req.params);
 });
 
 module.exports = router;
